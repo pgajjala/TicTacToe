@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button[][] grid;
     private boolean isPlayer1;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         isPlayer1 = true;
@@ -28,15 +28,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v){
         if (isPlayer1 && (((Button) v).getText()=="")) {
             ((Button) v).setText("X");
             isPlayer1 = !isPlayer1;
+            checkGameOver();
+
         } else if (!isPlayer1 && (((Button) v).getText()=="")){
             ((Button) v).setText("O");
             isPlayer1 = !isPlayer1;
+            checkGameOver();
         } else {
-            Toast.makeText(MainActivity.this, "invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Invalid", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void checkGameOver() {
+        if (checkRows() || checkColumns()) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    grid[i][j].setText("");
+                }
+            }
+        }
+    }
+
+    private boolean checkColumns() {
+        for (int j = 0; j < 3; j++) {
+            if (!grid[0][j].getText().toString().equals("")
+                && grid[0][j].getText().equals(grid[1][j].getText()) && grid[1][j].getText().equals(grid[2][j].getText())) {
+                Toast.makeText(MainActivity.this, grid[0][j].getText() + "wins!", Toast.LENGTH_LONG);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkRows(){
+        for (int i = 0; i < 3; i++) {
+            if (!grid[i][0].getText().toString().equals("")
+                && grid[i][0].getText().equals(grid[i][1].getText()) && grid[i][1].getText().equals(grid[i][2].getText())) {
+                Toast.makeText(MainActivity.this, grid[i][0].getText() + "wins!", Toast.LENGTH_LONG);
+                return true;
+            }
+        }
+        return false;
     }
 }
