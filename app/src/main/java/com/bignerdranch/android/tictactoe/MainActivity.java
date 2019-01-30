@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             isPlayer1 = !isPlayer1;
             checkGameOver();
         } else {
-            Toast.makeText(MainActivity.this, "Invalid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.invalid_text, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void checkGameOver() {
-        if (checkFull() || checkRows() || checkColumns() || checkDiagonals()) {
+        if (checkRows() || checkColumns() || checkDiagonals() || checkFull()) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     grid[i][j].setText("");
