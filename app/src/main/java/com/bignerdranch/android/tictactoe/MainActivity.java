@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void checkGameOver() {
-        if (checkRows() || checkColumns()) {
+        if (checkFull() || checkRows() || checkColumns() || checkDiagonals()) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     grid[i][j].setText("");
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int j = 0; j < 3; j++) {
             if (!grid[0][j].getText().toString().equals("")
                 && grid[0][j].getText().equals(grid[1][j].getText()) && grid[1][j].getText().equals(grid[2][j].getText())) {
-                Toast.makeText(MainActivity.this, grid[0][j].getText() + "wins!", Toast.LENGTH_LONG);
+                Toast.makeText(MainActivity.this, grid[0][j].getText() + " wins!", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -68,10 +68,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < 3; i++) {
             if (!grid[i][0].getText().toString().equals("")
                 && grid[i][0].getText().equals(grid[i][1].getText()) && grid[i][1].getText().equals(grid[i][2].getText())) {
-                Toast.makeText(MainActivity.this, grid[i][0].getText() + "wins!", Toast.LENGTH_LONG);
+                Toast.makeText(MainActivity.this, grid[i][0].getText() + " wins!", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean checkDiagonals() {
+        String[] check = new String[3];
+        for (int i = 0; i < 3; i++) {
+            check[i] = grid[i][i].getText().toString();
+        }
+        if(!check[0].equals("") && check[0].equals(check[1]) && check[1].equals(check[2])) {
+            Toast.makeText(MainActivity.this, check[0] + " wins!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        for (int i = 0; i < 3; i++) {
+             check[i] = grid[i][2-i].getText().toString();
+        }
+        if (!check[0].equals("") && check[0].equals(check[1]) && check[1].equals(check[2])) {
+            Toast.makeText(MainActivity.this, check[0] + " wins!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (grid[i][j].getText().toString().equals("")) {
+                    return false;
+                }
+            }
+        }
+        Toast.makeText(MainActivity.this, "It's a tie!", Toast.LENGTH_LONG).show();
+        return true;
     }
 }
