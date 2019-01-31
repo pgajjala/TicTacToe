@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
-        Toast.makeText(MainActivity.this, "It's a tie!", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, R.string.tie_text, Toast.LENGTH_LONG).show();
         return true;
     }
 }
